@@ -17,7 +17,7 @@ An HTTP server with livereload included. If a file inside the folder being serve
 
 **url** (default *empty*): Path to open the specific page. *e.g.* `/#/main` 
 
-**livereloadport** (default *35729*): Port for the livereload server. If `false` the livereload is disabled.
+**livereloadport** (default *35729*): Port for the livereload server. If `false` the livereload is disabled. if port is in use, a free one will be determined
 
 **watchPaths**: Comma-separated list of glob patterns for the files to watch. *e.g.* `**/*.js,**/*.css,**/*.html,**/*.png,**/*.gif,**/*.jpg`
 
@@ -29,7 +29,7 @@ Default usage
 
     > fed-http-server
 
-    HTTP server listening on port 8080
+    start on http://<ip>:8080
     Serving <path>
     Livereload listening on port 35729
     Watching files:

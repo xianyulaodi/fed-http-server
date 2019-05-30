@@ -15,10 +15,11 @@ module.exports = function(port, dir, url, livereloadPort, watchFiles, openBrowse
   dir = dir || '.';
   url = url || '';
 
-  if(livereloadPort === 'false' || livereloadPort === false)
+  if(livereloadPort === 'false' || livereloadPort === false) {
     livereloadPort = false;
-  else
+  } else {
     livereloadPort = livereloadPort || 35729;
+  }
 
   watchFiles = watchFiles || ['**/*.html', '**/*.js', '**/*.css', '**/*.png', '**/*.gif', '**/*.jpg'];
 
@@ -35,39 +36,45 @@ module.exports = function(port, dir, url, livereloadPort, watchFiles, openBrowse
 
 
   if(livereloadPort) {
-    server.use(require('connect-livereload')({ port: livereloadPort }));
+    portfinder.basePort = livereloadPort;  
+    portfinder.getPortPromise()
+    .then((liveport) => {
 
-    const livereloadServer = tinylr();
+      server.use(require('connect-livereload')({ port: liveport }));
+      const livereloadServer = tinylr();
 
-    livereloadServer.listen(livereloadPort, function(err) {
-      if(err) {
-        console.error("Livereload not started", err);
-        return;
-      }
+      livereloadServer.listen(liveport, function(err) {
+        if(err) {
+          console.error("Livereload not started", err);
+          return;
+        }
+        console.log('Livereload listening on port %s', liveport);
 
-      console.log('Livereload listening on port %s', livereloadPort);
-
-      console.log("Watching files:");
-      for(let f in absoluteWatchFiles) {
-        console.log('  ' + absoluteWatchFiles[f]);
-      }
-    });
-
-    gaze(watchFiles, {cwd: absoluteDir}, function(err, watcher) {
-      if(err) {
-        console.error("Unable to watch files", err);
-      }
-      let files = [];
-      const changed = debounce(function() {
-        console.log("Sending changes:\n\t%s", files.join("\n\t"));
-        livereloadServer.changed({body:{files:files}});
-        files = [];
-      }, debounceDelay);
-      this.on('all', function(event, filepath) {
-        console.log("Watch: " + filepath + ' was ' + event);
-        files.push(filepath);
-        changed();
+        console.log("Watching files:");
+        for(let f in absoluteWatchFiles) {
+          console.log('  ' + absoluteWatchFiles[f]);
+        }
       });
+
+      gaze(watchFiles, {cwd: absoluteDir}, function(err, watcher) {
+        if(err) {
+          console.error("Unable to watch files", err);
+        }
+        let files = [];
+        const changed = debounce(function() {
+          console.log("Sending changes:\n\t%s", files.join("\n\t"));
+          livereloadServer.changed({body:{files:files}});
+          files = [];
+        }, debounceDelay);
+        this.on('all', function(event, filepath) {
+          console.log("Watch: " + filepath + ' was ' + event);
+          files.push(filepath);
+          changed();
+        });
+      });
+    })
+    .catch((err) => {
+      console.error(err);
     });
   }
 
