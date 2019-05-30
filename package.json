@@ -1,0 +1,33 @@
+{
+  "name": "fed-http-server",
+  "version": "0.9.0",
+  "description": "An HTTP server with livereload included",
+  "main": "src/index.js",
+  "bin": {
+    "fed-http-server": "bin/fed-http-server",
+    "fedhs": "bin/fed-http-server"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:xianyulaodi/fed-http-server.git"
+  },
+  "author": "xianyulaodi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xianyulaodi/fed-http-server/issues"
+  },
+  "dependencies": {
+    "commander": "^2.0.0",
+    "connect": "^3.4.1",
+    "connect-livereload": "^0.5.4",
+    "gaze": "^1.1.0",
+    "get-ip": "^2.0.0",
+    "lodash.debounce": "^4.0.8",
+    "open": "0.0.5",
+    "portfinder": "^1.0.20",
+    "serve-index": "^1.8.0",
+    "serve-static": "^1.11.1",
+    "tiny-lr": "^0.2.1"
+  }
+}
