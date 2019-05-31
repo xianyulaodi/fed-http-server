@@ -11,6 +11,7 @@ An HTTP server with livereload included. If a file inside the folder being serve
 
     fed-http-server [-p <port>] [-d <dir>] [-l livereloadport] [-w < watchPaths || false >] [-b]
 
+
 **port** (default *8080*): Port to listen on, if port is in use, a free one will be determined
 
 **dir** (default *.*): Folder to serve
@@ -40,17 +41,32 @@ Default usage
       '<path>/**/*.gif'
       '<path>/**/*.jpg'
 
+you can use short command like this:
+
+    > fedhs
+
+    start on http://<ip>:8080
+    Serving <path>
+    Livereload listening on port 35729
+    Watching files:
+      '<path>/**/*.html'
+      '<path>/**/*.js'
+      '<path>/**/*.css'
+      '<path>/**/*.png'
+      '<path>/**/*.gif'
+      '<path>/**/*.jpg'
+
+
 All options
 
     > fed-http-server -p 80 -d src/ -u /#/main -l 30000 -w **/*.css,*.html 
 
-    HTTP server listening on port 80
-    Serving <path>/src
-    Open page in browser <path>/src/#/main
+    start on http://<ip>/#/main
+    serving <path>/src
     Livereload listening on port 30000
     Watching files:
-      <path>/src/**/*.css
-      <path>/src/*.html
+    <path>/src/**/*.css
+    <path>/src/*.html
 
 ##  Reference
 
