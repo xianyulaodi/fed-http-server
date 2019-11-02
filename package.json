@@ -24,7 +24,7 @@
     "gaze": "^1.1.0",
     "get-ip": "^2.0.0",
     "lodash.debounce": "^4.0.8",
-    "open": "0.0.5",
+    "open": "7.0.0",
     "portfinder": "^1.0.20",
     "serve-index": "^1.8.0",
     "serve-static": "^1.11.1",
